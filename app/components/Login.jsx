@@ -15,8 +15,8 @@ var Login = React.createClass({
       e.preventDefault();
       console.log(e.target.value);
       var data={
-        email: this.refs.email.value,
-        password: this.refs.password.value
+        email: this.refs.email.getValue(),
+        password: this.refs.password.getValue()
       };
       console.log(data);
       axios.post('/api/getAuth', data).then(function(data){
