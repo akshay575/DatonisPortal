@@ -2,36 +2,52 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 
-var authOptions = {
-    method: 'POST',
-    url: 'https://api.datonis.io/api_sign_in',
-    data: {
-      'email':
-      'password': 
-    },
-    headers: {
-      'Content-Type' : 'application/json'
-    },
-    json: true
-};
+var authToken;
 
-router.get('/', function(req, res){
-  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  // Set custom headers for CORS
-  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+router.post('/getAuth', function(req, res){
+  var email=req.body.email;
+  var password=req.body.password;
+
+  var authOptions = {
+      method: 'POST',
+      url: 'https://api.datonis.io/api_sign_in',
+      data: {
+        'email': email,
+        'password': password
+      },
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      json: true
+  };
+
   axios(authOptions).then(function(response){
-    console.log("SUCCESS");
-    res.send(response.data);
+    authToken = response.data.auth_token;
+    res.send(response.data.auth_token);
   }, function(err){
+    console.log(req.body, email, password);
     res.send(err);
   })
 });
 
-router.get('/a', function(req, res){
-  res.send({
-    "Name": "Hello"
-  });
-});
+router.get('/getThings', function(req, res){
+
+  var authOptions = {
+      method: 'GET',
+      url: 'https://api.datonis.io/api/v3/things',
+      headers: {
+        'Content-Type' : 'application/json',
+        'X-Auth-Token': 'vlpjTuFfyFrawoa4rmGffA'
+      },
+      json: true
+  };
+
+  axios(authOptions).then(function(response){
+    res.send(response.data);
+  }, function(err){
+    console.log(err);
+    res.send(err);
+  })
+})
 
 module.exports = router;
