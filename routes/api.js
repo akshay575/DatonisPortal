@@ -6,8 +6,8 @@ var authOptions = {
     method: 'POST',
     url: 'https://api.datonis.io/api_sign_in',
     data: {
-      'email':
-      'password': 
+      'email':'blakshay93@gmail.com',
+      'password':'prashant@123'
     },
     headers: {
       'Content-Type' : 'application/json'
