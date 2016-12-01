@@ -2,18 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    'script!jquery/dist/jquery.min.js',
-    'script!foundation-sites/dist/foundation.min.js',
     './app/app.jsx'
-  ],
-  externals: {
-    jquery: 'jQuery'
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      '$': 'jquery',
-      'jQuery': 'jquery'
-    })
   ],
   output: {
     path: __dirname,
@@ -24,8 +13,9 @@ module.exports = {
     alias: {
       Main: 'app/components/Main.jsx',
       applicationStyles: 'app/styles/app.scss',
-      signIn: 'app/api/signIn.jsx',
-      notifications: 'app/api/notifications.jsx'
+      Navigation: 'app/components/Navigation.jsx',
+      Login: 'app/components/Login.jsx',
+      Home: 'app/components/Home.jsx'
     },
     extensions: ['','.js', '.jsx']
   },
@@ -34,7 +24,7 @@ module.exports = {
       {
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-0', 'stage-1']
+          presets: ['react', 'es2015', 'stage-0']
         },
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/
